@@ -22,15 +22,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-//        User user = new User("user1","12345","Doctor");
-//        ref.child("users").child("u1").setValue(user);
+        //setup basic database
+        Patient pat = new Patient("Jake","M","June 23, 1912");
+        Doctor doc = new Doctor("Sarah","F","Psychiatry");
+        doc.addWeeklyAvailable("Monday, 14:00");
+        Appointment app = new Appointment("1","12:30, June 23, 2021", doc, pat);
+        pat.addToPrevious(app);
+
+        User user = new User("user1","12345","Doctor",doc);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("users").child("u1").setValue(user);
+        ref.child("appointments").child(app.getId()).setValue(app);
     }
 
     public void onRadioButtonClicked(View view) {
@@ -65,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                     && user.getType().equals(type)){
                         //login succeed
                         Log.i("info","succeed");
+                        Intent i = new Intent(MainActivity.this,DoctorActivity.class);
+                        startActivity(i);
                     }
                 }
                 //login fail
