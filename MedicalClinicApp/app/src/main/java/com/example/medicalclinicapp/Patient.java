@@ -8,6 +8,7 @@ public class Patient extends UserType{
     private String name;
     private String gender;
     private String birthdate;
+    //list of appointment id
     private List<String> previous = new ArrayList<String>();
     private List<String> upcoming = new ArrayList<String>();
     private List<String> visited = new ArrayList<String>();

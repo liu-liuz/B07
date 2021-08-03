@@ -8,7 +8,7 @@ public class User {
 
     //constructor
     public User(){}
-    public  User(String username, String password, String type, Doctor account){
+    public  User(String username, String password, String type, UserType account){
         this.password = password;
         this.username = username;
         this.type = type;
@@ -44,7 +44,7 @@ public class User {
         return account;
     }
 
-    public void setAccount(Doctor account) {
+    public void setAccount(UserType account) {
         this.account = account;
     }
 
