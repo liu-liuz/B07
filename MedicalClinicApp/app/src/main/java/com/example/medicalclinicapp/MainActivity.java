@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("info","succeed");
                         Intent i = new Intent(MainActivity.this,DoctorActivity.class);
                         startActivity(i);
+                        Intent in = new Intent(MainActivity.this,PatientActivity.class);
+                        startActivity(in);
                     }
                 }
                 //login fail

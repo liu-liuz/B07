@@ -9,7 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalClinicApp">
-        <activity android:name=".DoctorAppointments"></activity>
+        <activity
+            android:name=".PatientBookAppointments"
+            android:exported="true" />
+        <activity
+            android:name=".RecyclerViewAdapter2"
+            android:exported="true" />
+        <activity
+            android:name=".PatientAppointments"
+            android:exported="true" />
+        <activity
+            android:name=".PatientActivity"
+            android:exported="true" />
+        <activity android:name=".DoctorAppointments" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
