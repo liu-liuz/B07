@@ -4,15 +4,25 @@ public class User {
     private String username;
     private String password;
     private String type;
-    private UserType account;
+    private Patient PatientAccount;
+    private Doctor DoctorAccount;
 
     //constructor
     public User(){}
-    public  User(String username, String password, String type, UserType account){
+    public  User(String username, String password, String type, Doctor account){
         this.password = password;
         this.username = username;
         this.type = type;
-        this.account = account;
+        this.DoctorAccount = account;
+        this.PatientAccount = null;
+    }
+
+    public  User(String username, String password, String type, Patient account){
+        this.password = password;
+        this.username = username;
+        this.type = type;
+        this.PatientAccount = account;
+        this.DoctorAccount = null;
     }
 
     //getter and setter
@@ -40,12 +50,20 @@ public class User {
         this.type = type;
     }
 
-    public UserType getAccount() {
-        return account;
+    public Patient getPatientAccount() {
+        return PatientAccount;
     }
 
-    public void setAccount(UserType account) {
-        this.account = account;
+    public void setPatientAccount(Patient patientAccount) {
+        PatientAccount = patientAccount;
+    }
+
+    public Doctor getDoctorAccount() {
+        return DoctorAccount;
+    }
+
+    public void setDoctorAccount(Doctor doctorAccount) {
+        DoctorAccount = doctorAccount;
     }
 
     @Override

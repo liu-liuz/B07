@@ -3,7 +3,7 @@ package com.example.medicalclinicapp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Doctor extends UserType{
+public class Doctor{
     //each doctor has a name, a gender, weekly availabilities, specializations, and a list of patients who have visited them so far
     private String name;
     private String gender;

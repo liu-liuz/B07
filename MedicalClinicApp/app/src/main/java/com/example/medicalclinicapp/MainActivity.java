@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //setup basic database
+        // setup basic database
         Patient pat = new Patient("Jake","M","June 23, 1912");
         Doctor doc = new Doctor("Sarah","F","Psychiatry");
         doc.addWeeklyAvailable("Monday, 14:00");
@@ -38,9 +38,11 @@ public class MainActivity extends AppCompatActivity {
         pat.addToPrevious(app);
 
         User user = new User("user1","12345","Doctor",doc);
+        User user1 = new User("user2","12345","Patient",pat);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("users").child("u1").setValue(user);
+        ref.child("users").child("u2").setValue(user1);
         ref.child("appointments").child(app.getId()).setValue(app);
     }
 
