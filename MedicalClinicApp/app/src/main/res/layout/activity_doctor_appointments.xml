@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/viewAppoinments"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginTop="26dp"
+        android:background="#B8E7ED"
+        android:gravity="center"
+        android:text="UPCOMING APPOINTMENTS"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--
+    <TextView
+        android:id="@+id/viewAppointmentsInstruction"
+        android:layout_width="248dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/doctor_view_instructions"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAppoinments" />
+        -->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/upcomingAppointments"
+        android:layout_width="354dp"
+        android:layout_height="527dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAppoinments" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="78dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="20dp"
+        android:text="BACK"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upcomingAppointments" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
