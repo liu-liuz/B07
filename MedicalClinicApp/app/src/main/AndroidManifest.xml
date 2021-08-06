@@ -14,9 +14,6 @@
             android:name=".PatientBookAppointments"
             android:exported="true" />
         <activity
-            android:name=".RecyclerViewAdapter2"
-            android:exported="true" />
-        <activity
             android:name=".PatientAppointments"
             android:exported="true" />
         <activity
