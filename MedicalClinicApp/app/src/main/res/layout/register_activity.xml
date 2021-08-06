@@ -4,7 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/register_background">
+
+    <TextView
+        android:id="@+id/registerText"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="30dp"
+        android:textColor="#575757"
+        android:text="Register"
+        android:textSize="15pt" />
+
+    <TextView
+        android:id="@+id/greeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Lets get \nyou on board"
+        android:textSize="10pt" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,22 +37,13 @@
         android:layout_marginRight="50dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/patient_doctor"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="160dp"
-            android:layout_marginBottom="5dp"
-            android:src="@drawable/patient_login" />
-
         <TextView
             android:id="@+id/text_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginBottom="5dp"
             android:text="Patient"
+            android:layout_marginTop="150dp"
             android:textSize="10pt" />
 
         <RadioGroup
@@ -90,27 +104,69 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textCursorDrawable="@drawable/cursor"
-            android:layout_marginBottom="10dp"/>
+            android:textCursorDrawable="@drawable/cursor"/>
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@drawable/focus_tint"
+            android:hint="Name"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/cursor"/>
+
+        <EditText
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@drawable/focus_tint"
+            android:hint="Gender"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/cursor"/>
+
+        <EditText
+            android:id="@+id/birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@drawable/focus_tint"
+            android:hint="Birthday"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:onClick="datePicker"
+            android:textCursorDrawable="@drawable/cursor"/>
+
+        <EditText
+            android:id="@+id/specialization"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@drawable/focus_tint"
+            android:hint="Specialization"
+            android:singleLine="true"
+            android:visibility="gone"
+            android:textCursorDrawable="@drawable/cursor"/>
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="15dp"
             android:background="@drawable/roundbutton"
-            android:onClick="login"
-            android:text="Login"
-            android:textColor="@color/white" />
+            android:onClick="register"
+            android:text="Register"
+            android:textColor="@color/white"/>
 
         <Button
-            android:id="@+id/register"
+            android:id="@+id/sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="New user? Register Now"
-            android:onClick="register"
+            android:text="Already have an account? Sign in"
+            android:onClick="signIn"
             android:textColor="#3F51B5" />
+
 
     </LinearLayout>
 </RelativeLayout>

@@ -11,6 +11,7 @@ public class DoctorActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.doctor_activity);
+        User this_user = (User)getIntent().getSerializableExtra("this_user");
 
 //        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 //        User user = new User("user1","12345","Doctor");

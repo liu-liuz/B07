@@ -78,10 +78,14 @@ public class MainActivity extends AppCompatActivity {
                     && user.getType().equals(type)){
                         //login succeed
                         Log.i("info","succeed");
-                        Intent i = new Intent(MainActivity.this,DoctorActivity.class);
-                        startActivity(i);
-                        Intent in = new Intent(MainActivity.this,PatientActivity.class);
-                        startActivity(in);
+                        if(user.getType().equals("Doctor")) {
+                            Intent i = new Intent(MainActivity.this, DoctorActivity.class);
+                            startActivity(i);
+                        }
+                        else{
+                            Intent in = new Intent(MainActivity.this,PatientActivity.class);
+                            startActivity(in);
+                        }
                     }
                 }
                 //login fail
@@ -96,5 +100,12 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         ref.addValueEventListener(listener);
+    }
+
+    public void register(View view) {
+        Button register = findViewById(R.id.register);
+        register.setTextColor(getResources().getColor(R.color.light_blue));
+        Intent i = new Intent(MainActivity.this,RegisterActivity.class);
+        startActivity(i);
     }
 }

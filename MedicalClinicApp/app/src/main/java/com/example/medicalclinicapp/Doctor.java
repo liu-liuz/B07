@@ -1,9 +1,10 @@
 package com.example.medicalclinicapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Doctor{
+public class Doctor implements Serializable {
     //each doctor has a name, a gender, weekly availabilities, specializations, and a list of patients who have visited them so far
     private String name;
     private String gender;
