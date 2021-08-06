@@ -1,6 +1,7 @@
 package com.example.medicalclinicapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,16 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import java.util.ArrayList;
+import android.os.Bundle;
 
-public class DoctorAppointments extends AppCompatActivity {
+public class DoctorPastAppointments extends AppCompatActivity {
 
-    private static final String TAG = "DoctorAppointment";       //added this line for debugging
+    private static final String TAG = "DoctorPastAppointment";       //added this line for debugging
     private ArrayList<String> mAppointmentNames  = new ArrayList<>();   //added variables - the same one that we had in the adapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_appointments);
+        setContentView(R.layout.activity_doctor_past_appointments);
 
         Log.d(TAG, "onCreate: started.");
         //populating the array with strings for testing
@@ -49,7 +51,7 @@ public class DoctorAppointments extends AppCompatActivity {
 
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: init recyclerview");
-        RecyclerView recyclerView = findViewById(R.id.upcomingAppointments);
+        RecyclerView recyclerView = findViewById(R.id.pastAppointments);
         //parentLayout is from recyclerview_row.xml
         //upcomingAppointments is from activity_main.xml
 
@@ -72,5 +74,4 @@ public class DoctorAppointments extends AppCompatActivity {
             }
         });
     }
-
 }

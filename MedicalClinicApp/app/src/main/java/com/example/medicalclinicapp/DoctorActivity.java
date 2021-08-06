@@ -19,11 +19,13 @@ public class DoctorActivity extends AppCompatActivity{
 
 
         //links to page to view upcoming appointments
-        configureNextButton();
+        configureUpcomingAppointmentsButton();
+        configurePastAppointmentsButton();
 
     }
 
-    private void configureNextButton(){
+    //button to go to 'Upcoming Appointments'
+    private void configureUpcomingAppointmentsButton(){
         Button nextButton = (Button) findViewById(R.id.doctorUpcomingAppointments);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,4 +34,18 @@ public class DoctorActivity extends AppCompatActivity{
             }
         });
     }
+
+    //button to go to 'Past Appointments'
+    private void configurePastAppointmentsButton(){
+        Button nextButton = (Button) findViewById(R.id.doctorPastAppointments);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DoctorActivity.this, DoctorPastAppointments.class));
+                //change the DoctorAppointments.class to the new activity name
+            }
+        });
+    }
+
+
 }

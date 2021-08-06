@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalClinicApp">
+        <activity android:name=".DoctorPastAppointments"></activity>
         <activity
             android:name=".PatientBookAppointments"
             android:exported="true" />
@@ -31,7 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" android:exported="true"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true" />
         <activity
             android:name=".DoctorActivity"
             android:exported="true" />
