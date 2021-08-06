@@ -34,18 +34,6 @@ public class PatientBookAppointments extends AppCompatActivity {
         mDoctorNames.add("Doctor Name: Dr. Samantha Rice");
         mDoctorNames.add("Doctor Name: Dr. Joel Daniel");
         mDoctorNames.add("Doctor Name: Dr. Dylan Finnegan");
-        mDoctorNames.add("Doctor Name: Dr. Kylie Armstrong");
-        mDoctorNames.add("Doctor Name: Dr. Mary Crawford");
-        mDoctorNames.add("Doctor Name: Dr. Janet Simcoe");
-        mDoctorNames.add("Doctor Name: Dr. Franklin White");
-        mDoctorNames.add("Doctor Name: Dr. Kevin Decker");
-        mDoctorNames.add("Doctor Name: Dr. Tom Decker");
-        mDoctorNames.add("Doctor Name: Dr. Alexis Sanchez");
-        mDoctorNames.add("Doctor Name: Dr. Marylin Hernandez");
-        mDoctorNames.add("Doctor Name: Dr. Sam Richard");
-        mDoctorNames.add("Doctor Name: Dr. Joseph Clint");
-        mDoctorNames.add("Doctor Name: Dr. Devin Finn");
-        mDoctorNames.add("Doctor Name: Dr. Kyle Alvarez");
         //initiating the recycler view
         initRecyclerView();
 
