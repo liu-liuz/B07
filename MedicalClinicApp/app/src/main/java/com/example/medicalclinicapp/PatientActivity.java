@@ -16,7 +16,19 @@ public class PatientActivity extends AppCompatActivity {
 
         //links to page to view upcoming appointments
         configureNextButton();
+        configurePastAppointmentsButton();
 
+    }
+
+    private void configurePastAppointmentsButton() {
+        Button nextButton = (Button) findViewById(R.id.ViewMyPastAppointments);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PatientActivity.this, PatientPastAppointments.class));
+                //change the DoctorAppointments.class to the new activity name
+            }
+        });
     }
 
     private void configureNextButton() {

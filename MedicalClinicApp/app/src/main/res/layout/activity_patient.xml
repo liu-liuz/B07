@@ -17,13 +17,23 @@
         android:hint="View My Appointments" />
 
     <Button
-        android:id="@+id/BookMyAppointments"
+        android:id="@+id/ViewMyPastAppointments"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ViewMyAppointments"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="63dp"
-        android:text="Book My Appointment"
-        android:hint="Book My Appointments"/>
+        android:layout_marginTop="46dp"
+        android:hint="View My Past Appointments"
+        android:text="View My Past Appointments" />
+
+    <Button
+        android:id="@+id/BookMyAppointments"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ViewMyPastAppointments"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
+        android:hint="Book My Appointments"
+        android:text="Book My Appointment" />
 
 </RelativeLayout>
