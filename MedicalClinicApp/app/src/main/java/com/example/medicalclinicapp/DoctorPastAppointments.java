@@ -13,6 +13,11 @@ import android.widget.Button;
 import java.util.ArrayList;
 import android.os.Bundle;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class DoctorPastAppointments extends AppCompatActivity {
 
     private static final String TAG = "DoctorPastAppointment";       //added this line for debugging
@@ -22,28 +27,29 @@ public class DoctorPastAppointments extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_past_appointments);
+        User this_user = (User)getIntent().getSerializableExtra("this_user");
 
         Log.d(TAG, "onCreate: started.");
-        //populating the array with strings for testing
-        //do this from the database after
-        mAppointmentNames.add("Appointment 1 \nPatient Information:");
-        mAppointmentNames.add("Appointment 2 \nPatient Information:");
-        mAppointmentNames.add("Appointment 3 \nPatient Information:");
-        mAppointmentNames.add("Appointment 4 \nPatient Information:");
-        mAppointmentNames.add("Appointment 5 \nPatient Information:");
-        mAppointmentNames.add("Appointment 6 \nPatient Information:");
-        mAppointmentNames.add("Appointment 7 \nPatient Information:");
-        mAppointmentNames.add("Appointment 8 \nPatient Information:");
-        mAppointmentNames.add("Appointment 9 \nPatient Information:");
-        mAppointmentNames.add("Appointment 10 \nPatient Information:");
-        mAppointmentNames.add("Appointment 11 \nPatient Information:");
-        mAppointmentNames.add("Appointment 12 \nPatient Information:");
-        mAppointmentNames.add("Appointment 13 \nPatient Information:");
-        mAppointmentNames.add("Appointment 14 \nPatient Information:");
-        mAppointmentNames.add("Appointment 15 \nPatient Information:");
-
-        //initiating the recycler view
-        initRecyclerView();
+        FirebaseDatabase.getInstance().getReference().child("appointments").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Appointment appt = snapshot.getValue(Appointment.class);
+                    if (appt.getDoctor().getName().equals(this_user.getDoctorAccount().getName())) {
+                        //Currently just checking if doctor name is Sarah
+                        //Should check if it matches current doctor name and time is not already complete
+                        mAppointmentNames.add(appt.getPatient().getName() + " at "+ appt.getDate());
+                    }
+                    //System.out.println(appt.getPatient().getName());
+                    initRecyclerView();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadAppointment:onCancelled", databaseError.toException());
+            }
+        });
 
         configureBackButton();
 

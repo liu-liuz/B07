@@ -75,15 +75,17 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot child:dataSnapshot.getChildren()){
                     User user = child.getValue(User.class);
                     if(user.getUsername().toString().equals(username) && user.getPassword().toString().equals(password)
-                    && user.getType().equals(type)){
+                            && user.getType().equals(type)){
                         //login succeed
                         Log.i("info","succeed");
                         if(user.getType().equals("Doctor")) {
                             Intent i = new Intent(MainActivity.this, DoctorActivity.class);
+                            i.putExtra("this_user", user);
                             startActivity(i);
                         }
                         else{
                             Intent in = new Intent(MainActivity.this,PatientActivity.class);
+                            in.putExtra("this_user", user);
                             startActivity(in);
                         }
                     }

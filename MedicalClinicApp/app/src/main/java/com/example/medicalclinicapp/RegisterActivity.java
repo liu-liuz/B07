@@ -110,8 +110,10 @@ public class RegisterActivity extends AppCompatActivity {
             ref.child("users").child(UUID.randomUUID().toString()).setValue(user);
             Intent intent = new Intent(RegisterActivity.this, DoctorActivity.class);
             //passing data to next activity
+            //System.out.println(user.getUsername());
             intent.putExtra("this_user", user);
             startActivity(intent);
         }
     }
 }
+
