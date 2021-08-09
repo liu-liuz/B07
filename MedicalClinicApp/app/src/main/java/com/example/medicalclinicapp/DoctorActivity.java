@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +23,13 @@ public class DoctorActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.doctor_activity);
         User this_user = (User)getIntent().getSerializableExtra("this_user");
+        TextView name = (TextView)findViewById(R.id.doctor_name);
+        TextView gender = (TextView)findViewById(R.id.doctor_gender);
+        TextView birthday = (TextView)findViewById(R.id.doctor_specialization);
+        name.setText(this_user.getDoctorAccount().getName());
+        gender.setText(this_user.getDoctorAccount().getGender());
+        birthday.setText(this_user.getDoctorAccount().getSpecialization());
+        Log.i("info",this_user.getDoctorAccount().getName().toString());
         //System.out.println(this_user.getUsername());
 //        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 //        User user = new User("user1","12345","Doctor");

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Doctor doc = new Doctor("Sarah","F","Psychiatry");
 
         doc.addWeeklyAvailable("Monday, 14:00");
-        Appointment app = new Appointment("1",new Date(), doc, pat);
+        Appointment app = new Appointment("1895",new Date(2021 , 9 , 28 ), doc, pat);
         pat.addToPrevious(app);
 
         User user = new User("user1","12345","Doctor",doc);

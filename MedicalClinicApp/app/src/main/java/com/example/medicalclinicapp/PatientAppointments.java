@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PatientAppointments extends AppCompatActivity {
 
@@ -39,14 +41,19 @@ public class PatientAppointments extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Appointment appt = snapshot.getValue(Appointment.class);
+                    Date currentDate = Calendar.getInstance().getTime();
                     if (appt.getPatient().getName().equals(this_user.getPatientAccount().getName())) {
                         //Currently just checking if doctor name matches
                         //Should check if it matches current doctor name and time is not already complete
-                        mAppointmentNames.add("Patient Name: " + appt.getPatient().getName() + " \nAt: "+ appt.getDate() + "\nAppointment ID: " + appt.getId() + "\nDoctor: " + appt.getDoctor().getName()
-                                + "\nDoctor Specialization: " + appt.getDoctor().getSpecialization());
+                        if ((appt.getDate().compareTo(currentDate) > 0) || (appt.getDate().compareTo(currentDate) == 0)) {
+                            mAppointmentNames.add("Patient Name: " + appt.getPatient().getName() + " \nAt: " + appt.getDate() + "\nAppointment ID: " + appt.getId() + "\nDoctor: " + appt.getDoctor().getName()
+                                    + "\nDoctor Specialization: " + appt.getDoctor().getSpecialization());
+                        }
+
                     }
+                    initRecyclerView();
                 }
-                initRecyclerView();
+
             }
 
             @Override
