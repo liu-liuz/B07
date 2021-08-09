@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:text="View My Appointments"
             android:id="@+id/ViewMyAppointments"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="30dp"
             android:textSize="10pt"
             android:textColor="#313A53"
             android:background="@android:color/transparent"/>
@@ -97,7 +97,24 @@
             android:layout_height="wrap_content"
             android:text="Book My Appointment"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="10pt"
+            android:textColor="#313A53"
+            android:background="@android:color/transparent"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="3dp"
+            android:background="#CDCDCD" />
+
+        <Button
+            android:id="@+id/ViewMyPastAppointments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View My Past Appointments"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
             android:textSize="10pt"
             android:textColor="#313A53"
             android:background="@android:color/transparent"/>
