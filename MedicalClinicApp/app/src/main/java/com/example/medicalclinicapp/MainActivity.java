@@ -33,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
         // setup basic database
         Patient pat = new Patient("Jake","M","June 23, 1912");
         Doctor doc = new Doctor("Sarah","F","Psychiatry");
+
         doc.addWeeklyAvailable("Monday, 14:00");
+
         Appointment app = new Appointment("1","12:30, June 23, 2021", doc, pat);
         pat.addToPrevious(app);
 

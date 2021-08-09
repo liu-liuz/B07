@@ -1,5 +1,6 @@
 package com.example.medicalclinicapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -20,23 +27,49 @@ public class PatientAppointments extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_appointments);
 
+
+
+
         Log.d(TAG, "onCreate: started.");
         //populating the array with strings for testing
         //do this from the database after
-        mAppointmentNames.add("Appointment ID: 23455 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        mAppointmentNames.add("Appointment ID: 45372 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        mAppointmentNames.add("Appointment ID: 89765 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        mAppointmentNames.add("Appointment ID: 45376 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        mAppointmentNames.add("Appointment ID: 38458 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        mAppointmentNames.add("Appointment ID: 37654 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        mAppointmentNames.add("Appointment ID: 37546 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        mAppointmentNames.add("Appointment ID: 37463 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        mAppointmentNames.add("Appointment ID: 23746 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        mAppointmentNames.add("Appointment ID: 32436 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
-        //initiating the recycler view
-        initRecyclerView();
+        User this_user = (User)getIntent().getSerializableExtra("this_user");
+        FirebaseDatabase.getInstance().getReference().child("appointments").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Appointment appt = snapshot.getValue(Appointment.class);
+                    if (appt.getPatient().getName().equals(this_user.getPatientAccount().getName())) {
+                        //Currently just checking if doctor name matches
+                        //Should check if it matches current doctor name and time is not already complete
+                        mAppointmentNames.add("Patient Name: " + appt.getPatient().getName() + " \nAt: "+ appt.getDate() + "\nAppointment ID: " + appt.getId() + "\nDoctor: " + appt.getDoctor().getName()
+                                + "\nDoctor Specialization: " + appt.getDoctor().getSpecialization());
+                    }
+                }
+                initRecyclerView();
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadAppointment:onCancelled", databaseError.toException());
+            }
+        });
         configureBackButton();
+
+        //mAppointmentNames.add("Appointment ID: 23455 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //mAppointmentNames.add("Appointment ID: 45372 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //mAppointmentNames.add("Appointment ID: 89765 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //mAppointmentNames.add("Appointment ID: 45376 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //mAppointmentNames.add("Appointment ID: 38458 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //mAppointmentNames.add("Appointment ID: 37654 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //mAppointmentNames.add("Appointment ID: 37546 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //mAppointmentNames.add("Appointment ID: 37463 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //mAppointmentNames.add("Appointment ID: 23746 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //mAppointmentNames.add("Appointment ID: 32436 \nPatient Name:  \nDoctorName: \nAppointmentDate:");
+        //initiating the recycler view
+        //initRecyclerView();
+
+        //configureBackButton();
 
     }
 

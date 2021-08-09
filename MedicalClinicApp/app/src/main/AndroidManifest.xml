@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalClinicApp">
         <activity
+            android:name=".MyAdapter"
+            android:exported="true" />
+        <activity
             android:name=".PatientPastAppointments"
             android:exported="true" />
         <activity android:name=".DoctorPastAppointments" />

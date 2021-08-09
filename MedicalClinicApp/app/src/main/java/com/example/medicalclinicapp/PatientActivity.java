@@ -22,10 +22,15 @@ public class PatientActivity extends AppCompatActivity {
 
     private void configurePastAppointmentsButton() {
         Button nextButton = (Button) findViewById(R.id.ViewMyPastAppointments);
+        User this_user = (User)getIntent().getSerializableExtra("this_user");
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PatientActivity.this, PatientPastAppointments.class));
+                Intent intent = new Intent(PatientActivity.this, PatientPastAppointments.class);
+                intent.putExtra("this_user", this_user);
+                //System.out.println(this_user.getUsername());
+                startActivity(intent);
+                //startActivity(new Intent(PatientActivity.this, PatientPastAppointments.class));
                 //change the DoctorAppointments.class to the new activity name
             }
         });
@@ -34,10 +39,15 @@ public class PatientActivity extends AppCompatActivity {
     private void configureNextButton() {
         Button nextButton = (Button) findViewById(R.id.ViewMyAppointments);
         Button nextButton1 = (Button) findViewById(R.id.BookMyAppointments);
+        User this_user = (User)getIntent().getSerializableExtra("this_user");
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PatientActivity.this, PatientAppointments.class));
+                Intent intent = new Intent(PatientActivity.this, PatientAppointments.class);
+                intent.putExtra("this_user", this_user);
+                //System.out.println(this_user.getUsername());
+                startActivity(intent);
+                //startActivity(new Intent(PatientActivity.this, PatientAppointments.class));
             }
         });
 

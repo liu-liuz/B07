@@ -29,6 +29,7 @@ public class Patient implements Serializable {
         app.getDoctor().getVisited().add(app.getPatient().getName());
     }
 
+
     //getter and setter
     public String getName() {
         return name;
