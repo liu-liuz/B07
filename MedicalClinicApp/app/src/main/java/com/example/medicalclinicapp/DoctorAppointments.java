@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DoctorAppointments extends AppCompatActivity {
     private static final String TAG = "DoctorAppointment";       //added this line for debugging
@@ -38,10 +40,11 @@ public class DoctorAppointments extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Appointment appt = snapshot.getValue(Appointment.class);
-                    if (appt.getDoctor().getName().equals(this_user.getDoctorAccount().getName())) {
-                        //Currently just checking if doctor name matches
-                        //Should check if it matches current doctor name and time is not already complete
-                        mAppointmentNames.add(appt.getPatient().getName() + " at "+ appt.getDate());
+                    Date currentDate = Calendar.getInstance().getTime();
+                    if (appt.getDoctor().getName().equals(this_user.getDoctorAccount().getName())){
+                        if ((appt.getDate().compareTo(currentDate) > 0) || (appt.getDate().compareTo(currentDate) == 0)){
+                            mAppointmentNames.add(appt.getPatient().getName() + " at "+ appt.getDate());
+                        }
                     }
                     //System.out.println(appt.getPatient().getName());
                     initRecyclerView();

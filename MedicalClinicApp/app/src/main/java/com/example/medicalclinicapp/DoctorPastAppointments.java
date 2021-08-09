@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.os.Bundle;
 
 import com.google.firebase.database.DataSnapshot;
@@ -35,10 +38,11 @@ public class DoctorPastAppointments extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Appointment appt = snapshot.getValue(Appointment.class);
-                    if (appt.getDoctor().getName().equals(this_user.getDoctorAccount().getName())) {
-                        //Currently just checking if doctor name is Sarah
-                        //Should check if it matches current doctor name and time is not already complete
-                        mAppointmentNames.add(appt.getPatient().getName() + " at "+ appt.getDate());
+                    Date currentDate = Calendar.getInstance().getTime();
+                    if (appt.getDoctor().getName().equals(this_user.getDoctorAccount().getName())){
+                        if (appt.getDate().compareTo(currentDate) < 0){
+                            mAppointmentNames.add(appt.getPatient().getName() + " at "+ appt.getDate());
+                        }
                     }
                     //System.out.println(appt.getPatient().getName());
                     initRecyclerView();
