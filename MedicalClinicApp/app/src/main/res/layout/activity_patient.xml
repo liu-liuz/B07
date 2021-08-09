@@ -1,39 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#313A53" />
 
-    <Button
-        android:layout_marginTop="300dp"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View My Appointments"
-        android:id="@+id/ViewMyAppointments"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:hint="View My Appointments" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="270dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/ViewMyPastAppointments"
-        android:layout_width="200dp"
+        <ImageView
+            android:id="@+id/patient_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/patient_login" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ViewMyAppointments"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
-        android:hint="View My Past Appointments"
-        android:text="View My Past Appointments" />
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/BookMyAppointments"
-        android:layout_width="200dp"
+        <TextView
+            android:id="@+id/patient_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Patient_Name"
+            android:textColor="#FAFAFA"
+            android:textSize="12pt" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="3dp"
+            android:background="#8A8A8A" />
+
+
+        <TextView
+            android:id="@+id/patient_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Patient_gender"
+            android:textColor="#D6D6D6"
+            android:textSize="9pt" />
+
+        <TextView
+            android:id="@+id/patient_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#D6D6D6"
+            android:text="Patient_birthday"
+            android:textSize="9pt" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ViewMyPastAppointments"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
-        android:hint="Book My Appointments"
-        android:text="Book My Appointment" />
+        android:layout_marginTop="270dp"
+        android:orientation="vertical">
 
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="View My Appointments"
+            android:id="@+id/ViewMyAppointments"
+            android:layout_marginLeft="50dp"
+            android:textSize="10pt"
+            android:textColor="#313A53"
+            android:background="@android:color/transparent"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="3dp"
+            android:background="#CDCDCD" />
+
+        <Button
+            android:id="@+id/BookMyAppointments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book My Appointment"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:textSize="10pt"
+            android:textColor="#313A53"
+            android:background="@android:color/transparent"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="3dp"
+            android:background="#CDCDCD" />
+    </LinearLayout>
 </RelativeLayout>

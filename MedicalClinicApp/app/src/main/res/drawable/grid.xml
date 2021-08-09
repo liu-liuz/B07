@@ -1,0 +1,10 @@
+<shape
+    xmlns:andorid="http://schemas.android.com/apk/res/android"
+    andorid:shape="rectangle">
+    <solid andorid:color="@color/teal_700" />
+    <corners
+        andorid:bottomLeftRadius="10dp"
+        andorid:bottomRightRadius="10dp"
+        andorid:topLeftRadius="10dp"
+        andorid:topRightRadius="10dp"/>
+</shape>

@@ -1,0 +1,57 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#576C95">
+
+    <TextView
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Mark Your Date"
+        android:id="@+id/date"
+        android:textSize="15pt" />
+
+    <CalendarView
+        android:id="@+id/calendar"
+        android:layout_marginTop="10dp"
+        android:layout_width="334dp"
+        android:layout_height="321dp"
+        android:layout_gravity="center"
+        android:background="@drawable/calendar" />
+
+    <View
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="30dp"
+        android:background="#CDCDCD" />
+
+    <Button
+        android:id="@+id/choose_time"
+        android:layout_marginTop="2dp"
+        android:layout_width="fill_parent"
+        android:background="@android:color/transparent"
+        android:textColor="@color/white"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="wrap_content"
+        android:text="Choose your time"
+        android:textSize="23dip"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Book"
+        android:onClick="book"
+        android:layout_gravity="center"
+        android:background="@drawable/grid"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        />
+</LinearLayout>

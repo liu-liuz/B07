@@ -4,15 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class PatientActivity extends AppCompatActivity {
-
+    User this_user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
+        this_user = (User)getIntent().getSerializableExtra("this_user");
+        TextView name = (TextView)findViewById(R.id.patient_name);
+        TextView gender = (TextView)findViewById(R.id.patient_gender);
+        TextView birthday = (TextView)findViewById(R.id.patient_birthday);
+        name.setText(this_user.getPatientAccount().getName());
+        gender.setText(this_user.getPatientAccount().getGender());
+        birthday.setText(this_user.getPatientAccount().getBirthdate());
+        Log.i("info",this_user.getPatientAccount().getName().toString());
 
         //links to page to view upcoming appointments
         configureNextButton();
@@ -54,7 +64,9 @@ public class PatientActivity extends AppCompatActivity {
         nextButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PatientActivity.this, PatientBookAppointments.class));
+                Intent i = new Intent(PatientActivity.this, PatientBookAppointments.class);
+                i.putExtra("this_user", this_user);
+                startActivity(i);
             }
         });
     }

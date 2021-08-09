@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,21 +23,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //ArrayList<Date> available = new ArrayList<Date>();
 
         // setup basic database
         Patient pat = new Patient("Jake","M","June 23, 1912");
         Doctor doc = new Doctor("Sarah","F","Psychiatry");
 
         doc.addWeeklyAvailable("Monday, 14:00");
-
-        Appointment app = new Appointment("1","12:30, June 23, 2021", doc, pat);
+        Appointment app = new Appointment("1",new Date(), doc, pat);
         pat.addToPrevious(app);
 
         User user = new User("user1","12345","Doctor",doc);
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         String username = ((EditText)findViewById(R.id.username)).getText().toString();
         String password = ((EditText)findViewById(R.id.password)).getText().toString();
         String type = ((TextView)findViewById(R.id.text_type)).getText().toString();
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ValueEventListener listener = new ValueEventListener(){
             @Override
@@ -79,16 +85,15 @@ public class MainActivity extends AppCompatActivity {
                     if(user.getUsername().toString().equals(username) && user.getPassword().toString().equals(password)
                             && user.getType().equals(type)){
                         //login succeed
-                        Log.i("info","succeed");
                         if(user.getType().equals("Doctor")) {
                             Intent i = new Intent(MainActivity.this, DoctorActivity.class);
                             i.putExtra("this_user", user);
                             startActivity(i);
                         }
                         else{
-                            Intent in = new Intent(MainActivity.this,PatientActivity.class);
-                            in.putExtra("this_user", user);
-                            startActivity(in);
+                            Intent i = new Intent(MainActivity.this,PatientActivity.class);
+                            i.putExtra("this_user", user);
+                            startActivity(i);
                         }
                     }
                 }
