@@ -1,9 +1,11 @@
 package com.example.medicalclinicapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +19,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 public class PatientPastAppointments extends AppCompatActivity {
 
     private static final String TAG = "PatientPastAppointment";       //added this line for debugging
+    private ArrayList<Appointment> mAppointment  = new ArrayList<>();
     private ArrayList<String> mAppointmentNames  = new ArrayList<>();   //added variables - the same one that we had in the adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class PatientPastAppointments extends AppCompatActivity {
 
         User this_user = (User)getIntent().getSerializableExtra("this_user");
         FirebaseDatabase.getInstance().getReference().child("appointments").addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
@@ -41,14 +46,16 @@ public class PatientPastAppointments extends AppCompatActivity {
                         //Currently just checking if doctor name matches
                         //Should check if it matches current doctor name and time is not already complete
                         if (appt.getDate().compareTo(currentDate) < 0) {
-                            mAppointmentNames.add("Patient Name: " + appt.getPatient().getName() + " \nAt: " + appt.getDate() + "\nAppointment ID: " + appt.getId() + "\nDoctor: " + appt.getDoctor().getName()
-                                    + "\nDoctor Specialization: " + appt.getDoctor().getSpecialization());
+                            mAppointment.add(appt);
                         }
-
                     }
-                    initRecyclerView();
                 }
-
+                mAppointment.sort(Comparator.comparing(Appointment::getDate).reversed());
+                for(Appointment a: mAppointment){
+                    mAppointmentNames.add("Patient Name: " + a.getPatient().getName() + " \nAt: " + a.getDate() + "\nAppointment ID: " + a.getId() + "\nDoctor: " + a.getDoctor().getName()
+                            + "\nDoctor Specialization: " + a.getDoctor().getSpecialization());
+                }
+                initRecyclerView();
             }
 
             @Override
