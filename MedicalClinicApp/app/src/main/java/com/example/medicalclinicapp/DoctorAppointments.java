@@ -1,8 +1,10 @@
 package com.example.medicalclinicapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,10 +22,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 public class DoctorAppointments extends AppCompatActivity {
     private static final String TAG = "DoctorAppointment";       //added this line for debugging
+    private ArrayList<Appointment> mAppointment  = new ArrayList<>();
     private ArrayList<String> mAppointmentNames  = new ArrayList<>();   //added variables - the same one that we had in the adapter
 
     @Override
@@ -36,6 +40,7 @@ public class DoctorAppointments extends AppCompatActivity {
         //System.out.println(this_user.getDoctorAccount().getName());
 
         FirebaseDatabase.getInstance().getReference().child("appointments").addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -43,12 +48,15 @@ public class DoctorAppointments extends AppCompatActivity {
                     Date currentDate = Calendar.getInstance().getTime();
                     if (appt.getDoctor().getName().equals(this_user.getDoctorAccount().getName())){
                         if ((appt.getDate().compareTo(currentDate) > 0) || (appt.getDate().compareTo(currentDate) == 0)){
-                            mAppointmentNames.add(appt.getPatient().getName() + " at "+ appt.getDate());
+                            mAppointment.add(appt);
                         }
                     }
-                    //System.out.println(appt.getPatient().getName());
-                    initRecyclerView();
                 }
+                mAppointment.sort(Comparator.comparing(Appointment::getDate));
+                for(Appointment a: mAppointment){
+                    mAppointmentNames.add(a.getPatient().getName() + " at "+ a.getDate());
+                }
+                initRecyclerView();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
