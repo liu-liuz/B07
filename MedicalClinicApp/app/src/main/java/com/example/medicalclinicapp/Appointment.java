@@ -50,4 +50,6 @@ public class Appointment {
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
+
+
 }

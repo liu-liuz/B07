@@ -12,11 +12,11 @@
         android:layout_height="46dp"
         android:layout_marginTop="26dp"
         android:background="#FFFFFF"
-        android:textColor="#009688"
         android:gravity="center"
-        android:text="UPCOMING APPOINTMENTS"
+        android:text="PATIENT INFORMATION"
+        android:textColor="#009688"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,16 +38,17 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/upcomingAppointments"
-        android:layout_width="354dp"
-        android:layout_height="527dp"
-        android:layout_marginTop="10dp"
+        android:id="@+id/pastAppointments"
+        android:layout_width="321dp"
+        android:layout_height="518dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewAppoinments" />
+        app:layout_constraintTop_toBottomOf="@+id/viewAppoinments"
+        app:layout_constraintVertical_bias="0.686" />
 
     <Button
         android:id="@+id/backButton"
@@ -60,7 +61,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upcomingAppointments" />
+        app:layout_constraintTop_toBottomOf="@+id/pastAppointments" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="53dp"
+        android:layout_marginLeft="53dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="33dp"
+        android:text="Patient Profile"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/pastAppointments"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAppoinments" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

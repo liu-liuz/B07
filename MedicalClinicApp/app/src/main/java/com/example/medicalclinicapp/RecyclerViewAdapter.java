@@ -1,6 +1,8 @@
 package com.example.medicalclinicapp;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter"; //for debugging
     private ArrayList<String> mAppointmentNames = new ArrayList<>();
+    //private Context mContext;
 
     //constructor for the adapter
     public RecyclerViewAdapter(ArrayList<String> appointmentNames){
@@ -33,17 +36,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(RecyclerViewAdapter.ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
         //the log will print this n times, where n is the number of items in the list
+        //sets the text of the TextView to the corresponding element in tha array mAppointmentNames
         holder.appointmentName.setText(mAppointmentNames.get(position));
+
 
     }
 
     @Override
     public int getItemCount() {
-        //make sure this is not 0, otherwise nothing will show up
         return mAppointmentNames.size();
     }
 
-    //ViewHolder class
+
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView appointmentName;

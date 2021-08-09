@@ -11,15 +11,19 @@
         android:id="@+id/appointment"
         android:layout_width="390dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="#CFC0EA"
-        android:clickable="true"
         android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:background="#2B0275"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:paddingLeft="20dp"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:focusable="true" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

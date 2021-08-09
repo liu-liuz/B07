@@ -1,11 +1,21 @@
 package com.example.medicalclinicapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 public class DoctorActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +31,8 @@ public class DoctorActivity extends AppCompatActivity{
         //links to page to view upcoming appointments
         configureUpcomingAppointmentsButton();
         configurePastAppointmentsButton();
+        configurePatientInformationButton();
+        //configureSignOutButton();
 
     }
 
@@ -46,13 +58,45 @@ public class DoctorActivity extends AppCompatActivity{
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DoctorActivity.this, DoctorAppointments.class);
+                Intent intent = new Intent(DoctorActivity.this, DoctorPastAppointments.class);
                 intent.putExtra("this_user", this_user);
                 startActivity(intent);
                 //change the DoctorAppointments.class to the new activity name
             }
         });
     }
+
+    //button to go to 'Patient Information' page
+    private void configurePatientInformationButton(){
+        Button nextButton = (Button) findViewById(R.id.patientInformation);
+        User this_user = (User)getIntent().getSerializableExtra("this_user");
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DoctorActivity.this, PatientInformation.class);
+                intent.putExtra("this_user", this_user);
+                startActivity(intent);
+                //change the DoctorAppointments.class to the new activity name
+            }
+        });
+    }
+
+
+
+    /*
+    //button to 'Sign Out' and go back to home page?
+    //problem: once signed out, you can't sign back in
+    private void configureSignOutButton(){
+        Button nextButton = (Button) findViewById(R.id.signOut);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DoctorActivity.this, MainActivity.class));
+                //change the DoctorAppointments.class to the new activity name
+            }
+        });
+    }
+    */
 
 
 }
