@@ -23,7 +23,6 @@ import java.util.Comparator;
 import java.util.Date;
 
 public class PatientPastAppointments extends AppCompatActivity {
-
     private static final String TAG = "PatientPastAppointment";       //added this line for debugging
     private ArrayList<Appointment> mAppointment  = new ArrayList<>();
     private ArrayList<String> mAppointmentNames  = new ArrayList<>();   //added variables - the same one that we had in the adapter

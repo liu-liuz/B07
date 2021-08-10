@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 public class PatientActivity extends AppCompatActivity {
     User this_user;
+    String pKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
+        pKey = (String) getIntent().getSerializableExtra("pKey");
         this_user = (User)getIntent().getSerializableExtra("this_user");
         TextView name = (TextView)findViewById(R.id.patient_name);
         TextView gender = (TextView)findViewById(R.id.patient_gender);
@@ -38,6 +40,7 @@ public class PatientActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(PatientActivity.this, PatientPastAppointments.class);
                 intent.putExtra("this_user", this_user);
+                intent.putExtra("pKey", pKey);
                 //System.out.println(this_user.getUsername());
                 startActivity(intent);
                 //startActivity(new Intent(PatientActivity.this, PatientPastAppointments.class));
@@ -65,6 +68,7 @@ public class PatientActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(PatientActivity.this, PatientBookAppointments.class);
+                i.putExtra("pKey",pKey);
                 i.putExtra("this_user", this_user);
                 startActivity(i);
             }

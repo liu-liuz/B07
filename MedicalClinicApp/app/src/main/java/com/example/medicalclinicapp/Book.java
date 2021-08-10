@@ -1,6 +1,7 @@
 package com.example.medicalclinicapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
@@ -27,16 +30,20 @@ import java.util.UUID;
 public class Book extends AppCompatActivity {
     CalendarView calendarView;
     TextView date;
-    String[] time = new String[]{"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00",
-            "17:00", "18:00", "19:00", "20:00"};
-
-    Button RadioButton;
-    SimpleDateFormat format;
     ListView timeListView;
-    String dateChosen;
+    Button RadioButton;
     RadioOnClick radioOnClick = new RadioOnClick(1);
+
+    String[] timeArray = new String[12];
+    ArrayList<String> timeList = new ArrayList<String>();
+
+
+    SimpleDateFormat format, format2;
+    String dateChosen, key, pKey;
     Patient pat;
     Doctor doc;
+    User user, d_user;
+    Date input;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +51,31 @@ public class Book extends AppCompatActivity {
 
         pat = (Patient)getIntent().getSerializableExtra("patient");
         doc = (Doctor)getIntent().getSerializableExtra("doctor");
+        key = (String)getIntent().getSerializableExtra("key");
+        pKey = (String) getIntent().getSerializableExtra("pKey");
+        user = (User)getIntent().getSerializableExtra("user");
+        d_user = (User)getIntent().getSerializableExtra("dUser");
 
         calendarView = (CalendarView) findViewById(R.id.calendar);
         date = (TextView) findViewById(R.id.date);
         format = new SimpleDateFormat("yyyy/MM/dd  HH:mm");
-        dateChosen = format.format(new Date());;
+        format2 = new SimpleDateFormat("yyyy/MM/dd");
+        Date today = new Date();
+        dateChosen = format2.format(today);
+        //day of next week
+        long week = System.currentTimeMillis() + 6 * 24 * 3600 * 1000;
+        Date next = new Date(week);
+        //set max and min for calendar
+        calendarView.setMinDate(today.getTime());
+        calendarView.setMaxDate(next.getTime());
+        input = today;
+
+
+        try {
+            addTimeChoice();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         date.setText(dateChosen);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -56,7 +83,13 @@ public class Book extends AppCompatActivity {
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
                 String d = i + "/"+ (i1 + 1) + "/" + i2;
                 dateChosen = d;
-                date.setText(d);
+                try {
+                    input = format2.parse(d);
+                    addTimeChoice();
+                    date.setText(d);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -64,15 +97,29 @@ public class Book extends AppCompatActivity {
         RadioButton.setOnClickListener(new RadioClickListener());
 
     }
+    public void addTimeChoice() throws ParseException {
+        timeList.removeAll(timeList);
+        timeArray = new String[timeList.size()];
+        for(int i = 0; i < doc.getWeekly_availabilities().size(); i++){
+            Date temp = format.parse(doc.getWeekly_availabilities().get(i));
+            if(input.getDate() == temp.getDate()){
+                timeList.add(doc.getWeekly_availabilities().get(i));
+            }
+        }
+        timeArray = timeList.toArray(timeArray);
+    }
+
     class RadioClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            AlertDialog dialog =new AlertDialog.Builder(Book.this).setTitle("Choose your time")
-                    .setSingleChoiceItems(time,radioOnClick.getIndex(),radioOnClick).create();
+            AlertDialog dialog = new AlertDialog.Builder(Book.this).setTitle("Choose your time")
+                    .setSingleChoiceItems(timeArray,radioOnClick.getIndex(),radioOnClick).create();
             timeListView = dialog.getListView();
+            dialog.setCanceledOnTouchOutside(true);
             dialog.show();
         }
     }
+
     class RadioOnClick implements DialogInterface.OnClickListener{
         private int index;
 
@@ -88,17 +135,43 @@ public class Book extends AppCompatActivity {
 
         public void onClick(DialogInterface dialog, int whichButton){
             setIndex(whichButton);
-            dialog.dismiss();
-            dateChosen += "  "+time[index];
+            dateChosen = timeArray[index];
             date.setText(dateChosen);
+            dialog.dismiss();
         }
     }
+
     public void book(View view) throws ParseException {
-        Date input = format.parse(dateChosen);
-        String id = UUID.randomUUID().toString();
-        Appointment app = new Appointment(id,input,doc,pat);
-        //Add to upcoming...
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("appointments").child(id).setValue(app);
+        //Update user
+        try {
+            input = format.parse(dateChosen);
+            String id = UUID.randomUUID().toString();
+
+            d_user.getDoctorAccount().removeWeeklyAvailable(dateChosen);
+            user.getPatientAccount().addToUpcoming(id);
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            ref.child("users").child(key).setValue(d_user);
+            ref.child("users").child(pKey).setValue(user);
+
+            Appointment app = new Appointment(id,input,doc,pat);
+
+            //Add to upcoming...
+            ref.child("appointments").child(id).setValue(app);
+
+            finish();
+
+        } catch (ParseException e) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(Book.this);
+            builder1.setTitle("Alert");
+            builder1.setMessage("You haven't choose your time yet!");
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
+        }
     }
 }

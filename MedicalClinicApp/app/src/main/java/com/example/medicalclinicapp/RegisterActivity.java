@@ -20,14 +20,19 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
+    ArrayList<String> weekAvailable = new ArrayList<String>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
+        weekAvailable = (ArrayList<String>) getIntent().getSerializableExtra("weekAvailable");
+
     }
 
     public void onRadioButtonClicked(View view) {
@@ -106,6 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
             String specialization = ((EditText)findViewById(R.id.specialization)).getText().toString();
             Doctor doc = new Doctor(name,gender,specialization);
             User user = new User(username,password,"Doctor",doc);
+            doc.addWeeklyAvailables(weekAvailable);
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
             ref.child("users").child(UUID.randomUUID().toString()).setValue(user);
             Intent intent = new Intent(RegisterActivity.this, DoctorActivity.class);

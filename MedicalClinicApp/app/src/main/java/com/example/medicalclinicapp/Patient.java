@@ -23,10 +23,13 @@ public class Patient implements Serializable {
     }
 
     //Just for testing
-    public void addToPrevious(Appointment app){
-        previous.add(app.getId());
-        visited.add(app.getDoctor().getName());
-        app.getDoctor().getVisited().add(app.getPatient().getName());
+    public void addToPrevious(String app){ previous.add(app); }
+    public void addToVisited(String name){ visited.add(name); }
+    public void addToUpcoming(String id){
+        upcoming.add(id);
+    }
+    public void removeUpcoming(String id){
+        upcoming.remove(id);
     }
 
 

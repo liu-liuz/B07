@@ -2,6 +2,7 @@ package com.example.medicalclinicapp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Doctor implements Serializable {
@@ -20,10 +21,13 @@ public class Doctor implements Serializable {
         this.specialization = specialization;
     }
 
-    //for testing
-    public void addWeeklyAvailable(String date){
-        weekly_availabilities.add(date);
+    //addWeeklyAvailable
+    public void addVisited(String name){ visited.add(name); }
+    public void addWeeklyAvailables(ArrayList<String> date){
+        weekly_availabilities.addAll(date);
     }
+    public void removeWeeklyAvailable(String date){ weekly_availabilities.remove(date); }
+    public void removeWeeklyAvailable(int i){ weekly_availabilities.remove(i); }
 
     @Override
     public String toString() {
