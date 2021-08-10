@@ -42,7 +42,7 @@ public class PatientInformation extends AppCompatActivity {
                     //adds to list iff user is a patient
                     //make sure patient has the specified name
                     if (patient.getType().equals("Patient")) {
-                        mAppointmentNames.add("NAME: " + patient.getPatientAccount().getName() + "\nGENDER: " + patient.getPatientAccount().getGender()  + "\nDATE OF BIRTH: " + patient.getPatientAccount().getBirthdate() + "\nPREVIOUS APPOINTMENTS: " + patient.getPatientAccount().getPrevious() + "\nUPCOMING APPOINTMENTS:" + patient.getPatientAccount().getUpcoming() + "\nDOCTORS SEEN:");
+                        mAppointmentNames.add("\nPATIENT INFORMATION \n-------------------------\nNAME: " + patient.getPatientAccount().getName() + "\nGENDER: " + patient.getPatientAccount().getGender()  + "\nDATE OF BIRTH: " + patient.getPatientAccount().getBirthdate() + "\n-------------------------\nPATIENT HISTORY\n-------------------------\nPREVIOUS APPOINTMENTS: " + patient.getPatientAccount().getPrevious() + "\nUPCOMING APPOINTMENTS:" + patient.getPatientAccount().getUpcoming() + "\nDOCTORS SEEN:" + patient.getPatientAccount().getVisited() + "\n");
                     }
                     initRecyclerView();
                 }
@@ -53,7 +53,6 @@ public class PatientInformation extends AppCompatActivity {
                 Log.w(TAG, "loadAppointment:onCancelled", databaseError.toException());
             }
         });
-
         configureBackButton();
 
     }
@@ -61,13 +60,9 @@ public class PatientInformation extends AppCompatActivity {
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = findViewById(R.id.pastAppointments);
-
-        //create RecyclerViewAdapter object + passing in the dataset and the context to the adapter
         Log.d(TAG, "creating RecyclerViewAdapter object");
-        //took out 'this' as the last argument
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(mAppointmentNames);
 
-        Log.d(TAG, "adapter created");
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(mAppointmentNames);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
