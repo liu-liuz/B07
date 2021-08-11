@@ -56,69 +56,6 @@ public class PatientProfile extends AppCompatActivity {
             TextView info = findViewById(R.id.patientInfoTextView);
             info.setText(information);
 
-
-
-
-            /*final String[] name = new String[1];
-            final String[] gender = new String[1];
-            final String[] dob = new String[1];
-            final List<String>[] past = new List<String>[1];
-            final List<String>[] upcoming = new List<String>[1];
-            final List<String>[] docs = new List<String>[1];*/
-
-
-            //find appointment ID
-            //String information = getIntent().getStringExtra("appointment_info");
-            int index = information.indexOf(")");
-            String id = information.substring(index + 1);
-            System.out.println("The appointment id is:" + id);
-
-
-            //extract additional information from Firebase using appointment id
-
-
-            FirebaseDatabase.getInstance().getReference().child("appointments").addListenerForSingleValueEvent(new ValueEventListener() {
-
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Appointment appt = snapshot.getValue(Appointment.class);
-
-                        if (appt.getId() == id) {
-                            Log.i("PatientInfo", appt.getPatient().getName());
-                                /*name[0] = appt.getPatient().getName();
-                                gender[0] = appt.getPatient().getGender();
-                                dob[0] = appt.getPatient().getBirthdate();
-                                past[0] = appt.getPatient().getPrevious();
-                                upcoming[0] = appt.getPatient().getUpcoming();
-                                docs[0] = appt.getPatient().getVisited();*/
-//
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                }
-            });
-
-
-
-            /*
-            //storing data into local variables
-            String name = getIntent().getStringExtra("image_url");
-            String gender = getIntent().getStringExtra("image_name");
-            String dob = getIntent().getStringExtra("image_name");
-
-            //find the appropriate view by ID and set its text to one collected above
-            TextView patient_name = findViewById(R.id.patient_name);
-            patient_name.setText(name);
-
-            TextView patient_gender = findViewById(R.id.patient_gender);
-            patient_gender.setText(gender);
-
-            TextView patient_birthday = findViewById(R.id.patient_birthday);
-            patient_name.setText(dob);
-            */
         }
 
 

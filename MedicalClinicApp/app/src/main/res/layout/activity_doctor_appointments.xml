@@ -7,22 +7,6 @@
     android:background="@drawable/background"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/viewAppoinments"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:layout_marginTop="26dp"
-        android:background="#00FFFFFF"
-        android:textColor="#132068"
-        android:gravity="center"
-        android:text="UPCOMING APPOINTMENTS"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <!--
     <androidx.recyclerview.widget.RecyclerView
@@ -39,28 +23,52 @@
 
 
     <TextView
+        android:id="@+id/viewAppoinments"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="2dp"
+        android:background="#00FFFFFF"
+        android:gravity="center"
+        android:text="UPCOMING APPOINTMENTS"
+        android:textColor="#132068"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/viewAppointmentsInstruction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/viewAppointmentsInstruction"
         android:layout_width="wrap_content"
         android:layout_height="23dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="3dp"
         android:text="Click on an item to view patient information"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/upcomingAppointments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.714"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewAppoinments" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/upcomingAppointments"
-        android:layout_width="354dp"
-        android:layout_height="525dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="40dp"
+        android:layout_width="346dp"
+        android:layout_height="466dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="@id/backButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewAppointmentsInstruction" />
 

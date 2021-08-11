@@ -56,7 +56,7 @@ public class DoctorAppointments extends AppCompatActivity {
                 mAppointment.sort(Comparator.comparing(Appointment::getDate));
                 for(Appointment a: mAppointment){
                     mAppointmentNames.add(a.getPatient().getName() + " at "+ a.getDate());
-                    mPatientInfo.add("\nPATIENT INFORMATION \n-----------------------------------------------------\nNAME: " + a.getPatient().getName() + "\nGENDER: " + a.getPatient().getGender()  + "\nDATE OF BIRTH: " + a.getPatient().getBirthdate() + "\n\nPATIENT HISTORY\n-----------------------------------------------------\nPREVIOUS APPOINTMENTS: " + a.getPatient().getPrevious() + "\nUPCOMING APPOINTMENTS:" + a.getPatient().getUpcoming() + "\nDOCTORS SEEN:" + a.getPatient().getVisited() + "\n");
+                    mPatientInfo.add("\n\tPATIENT INFORMATION \n-----------------------------------------------------\n\tNAME: " + a.getPatient().getName() + "\n\tGENDER: " + a.getPatient().getGender()  + "\n\tDATE OF BIRTH: " + a.getPatient().getBirthdate() + "\n\n\tPATIENT HISTORY\n-----------------------------------------------------\n\tDOCTORS SEEN:" + a.getPatient().getVisited() + "\n");
                 }
                 initRecyclerView();
             }

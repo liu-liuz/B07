@@ -24,7 +24,7 @@ public class ClickableRecyclerViewAdapter extends RecyclerView.Adapter<Clickable
     private ArrayList<String> mPatientInfo = new ArrayList<>();
     private Context mContext;
 
-    //should add context
+    //adding mPatientInfo to store patient information to send to 'Patient Profile' page
     public ClickableRecyclerViewAdapter(Context context, ArrayList<String> appointmentNames,  ArrayList<String> patientInfo){
         mAppointmentNames = appointmentNames;
         mPatientInfo = patientInfo;
@@ -45,14 +45,11 @@ public class ClickableRecyclerViewAdapter extends RecyclerView.Adapter<Clickable
         holder.appointmentName.setText(mAppointmentNames.get(position));
 
 
-        //CHANGED FROM PARENT_LAYOUT TO appointmentName
         holder.appointmentName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("TAG", "onClick: clicked on an item");
                 Intent intent = new Intent(mContext, PatientProfile.class);
                 intent.putExtra("appointment_info", mPatientInfo.get(position));
-                Log.i("TAG", "INTENT CREATED AND THE FOLLOWING INFORMATION HAS BEEN SENT" + mPatientInfo.get(position));
                 mContext.startActivity(intent);
             }
         });
@@ -72,7 +69,6 @@ public class ClickableRecyclerViewAdapter extends RecyclerView.Adapter<Clickable
             super(itemView);
             appointmentName = itemView.findViewById(R.id.appointment);
             parent_layout = itemView.findViewById(R.id.parentLayout);
-            //appointment, parentLayout are IDs in recyclerview_row.xml
         }
 
     }
