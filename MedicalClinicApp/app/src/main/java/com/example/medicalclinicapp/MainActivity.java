@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<String> weekAvailable = new ArrayList<String>();
@@ -41,27 +42,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         adjustAvailable();
-        //ArrayList<Date> available = new ArrayList<Date>();
-
-        // setup basic database
-        //Patient pat = new Patient("Jake","M","June 23, 1912");
-        //Doctor doc = new Doctor("Sarah","F","Psychiatry");
-
-        //doc.addWeeklyAvailable("Monday, 14:00");
-        //Appointment app = new Appointment("1895",new Date(2021 , 9 , 28 ), doc, pat);
-        //pat.addToPrevious(app);
-
-        //User user = new User("user1","12345","Doctor",doc);
-        //User user1 = new User("user2","12345","Patient",pat);
-
-        //DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        //ref.child("users").child("u1").setValue(user);
-        //ref.child("users").child("u2").setValue(user1);
-        //ref.child("appointments").child(app.getId()).setValue(app);
-
         updateDoc();
     }
     public void updateDoc() {
+        //format.setTimeZone(TimeZone.getTimeZone("EDT"));
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ValueEventListener listener = new ValueEventListener(){
             @Override
@@ -75,20 +59,21 @@ public class MainActivity extends AppCompatActivity {
                         Date first = null;
                         try {
                             first = format.parse(doctor.getWeekly_availabilities().get(0));
-                            if (first.getDay() < today.getDay()) {
+                            if (first.getDay() < today.getDay()) {//old date in database;
                                 doctor.addWeeklyAvailables(dayAvailable);
-                                for (int i = 0; i < 12; i++) {
+                                for (int i = 0; i < doctor.getWeekly_availabilities().size(); i++) {
+                                    Date temp = format.parse(doctor.getWeekly_availabilities().get(i));
                                     doctor.removeWeeklyAvailable(i);
+                                    if(temp.getDay() != first.getDay()){
+                                        break;
+                                    }
                                 }
-                            } else { //Remove passed time
-                                for (int i = 0; i < 12; i++) {
-                                    try {
-                                        Date temp = format.parse(doctor.getWeekly_availabilities().get(i));
-                                        if (temp.before(new Date())) {
-                                            doctor.removeWeeklyAvailable(i);
-                                        }
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
+                            } else if(first.getDay() == today.getDay() && first.before(today)) {
+                                for (int i = 0; i < doctor.getWeekly_availabilities().size(); i++) {
+                                    Date temp = format.parse(doctor.getWeekly_availabilities().get(i));
+                                    doctor.removeWeeklyAvailable(i);
+                                    if(temp.getHours()>today.getHours()){
+                                        break;
                                     }
                                 }
                             }
@@ -113,23 +98,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void adjustAvailable(){
         Date today = new Date();
+        Date tomorrow = new Date(today.getYear(),today.getMonth(),(today.getDate()+1));
         // add week available
         for(int i = 0; i < 7; i++){
             if(today.getHours()<21){
-                for (int j = 0; j<12; j++){
+                for (int j = 0; j<9; j++){
                     weekAvailable.add(format.format(new Date(today.getYear(),today.getMonth(),(today.getDate()+i),9+j,0,0)));
                 }
             }
             else{
-                for (int j = 0; j<12; j++){
-                    weekAvailable.add(format.format(new Date(today.getYear(),today.getMonth(),(today.getDate()+1+i),9+j,0,0)));
+                for (int j = 0; j<9; j++){
+                    weekAvailable.add(format.format(new Date(tomorrow.getYear(),tomorrow.getMonth(),(tomorrow.getDate()+i),9+j,0,0)));
                 }
             }
         }
-
         // add day available
-        for (int j = 0; j<12; j++){
-            dayAvailable.add(format.format(new Date(today.getYear(),today.getMonth(),(today.getDay()+1),9+j,0,0)));
+        for (int j = 0; j<9; j++){
+            dayAvailable.add(format.format(new Date(today.getYear(),today.getMonth(),(today.getDate()+7),9+j,0,0)));
         }
     }
 

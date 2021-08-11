@@ -70,11 +70,18 @@ public class DoctorAdp extends ArrayAdapter<Doctor> implements Filterable {
                 }
                 else{
                     constraint = constraint.toString().toLowerCase();
+                    String[] splited = (constraint.toString()).split("\\s+");
                     for (int i = 0; i < docs.size(); i++) {
                         Doctor doc = docs.get(i);
-                        if (doc.getName().toLowerCase().contains(constraint.toString()) ||
-                                doc.getGender().toLowerCase().contains(constraint.toString()) ||
-                                doc.getSpecialization().toLowerCase().contains(constraint.toString())) {
+                        Boolean contain = true;
+                        String docString = doc.getName() + doc.getGender() + doc.getSpecialization();
+                        for(int j = 0; j<splited.length; j++){
+                            if (!docString.toLowerCase().contains(splited[j])){
+                                contain = false;
+                                break;
+                            }
+                        }
+                        if(contain){
                             FilteredArrayNames.add(doc);
                         }
                     }
