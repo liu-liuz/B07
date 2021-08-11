@@ -44,7 +44,7 @@ public class PatientPastAppointments extends AppCompatActivity {
                     if (appt.getPatient().getName().equals(this_user.getPatientAccount().getName())) {
                         //Currently just checking if doctor name matches
                         //Should check if it matches current doctor name and time is not already complete
-                        if (appt.getDate().compareTo(currentDate) < 0) {
+                        if (appt.getDate().compareTo(currentDate) < 0 ) {
                             mAppointment.add(appt);
                         }
                     }

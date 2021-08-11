@@ -1,18 +1,21 @@
 package com.example.medicalclinicapp;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,34 +41,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         adjustAvailable();
+        //ArrayList<Date> available = new ArrayList<Date>();
 
         // setup basic database
-//        Doctor doc = new Doctor("Sarah","F","Psychiatry");
-//        Doctor doc1 = new Doctor("Dave","M","Cardiologist");
-//        Doctor doc2 = new Doctor("Harry","M","Cardiologist");
-//        Patient pat = new Patient("Susan","F","March 1,2012");
-//        doc.addWeeklyAvailables(weekAvailable);
-//        doc1.addWeeklyAvailables(weekAvailable);
-//        doc2.addWeeklyAvailables(weekAvailable);
+        //Patient pat = new Patient("Jake","M","June 23, 1912");
+        //Doctor doc = new Doctor("Sarah","F","Psychiatry");
 
+        //doc.addWeeklyAvailable("Monday, 14:00");
+        //Appointment app = new Appointment("1895",new Date(2021 , 9 , 28 ), doc, pat);
+        //pat.addToPrevious(app);
 
-//          Appointment app = new Appointment("1895",new Date(2020 , 6 , 28 ), doc, pat);
+        //User user = new User("user1","12345","Doctor",doc);
+        //User user1 = new User("user2","12345","Patient",pat);
 
-//        User user = new User("user1","12345","Doctor",doc);
-//        User user1 = new User("user3","12345","Doctor",doc1);
-//        User user2 = new User("user4","12345","Doctor",doc2);
-//        User user3 = new User("user2","12345","Patient",pat);
+        //DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        //ref.child("users").child("u1").setValue(user);
+        //ref.child("users").child("u2").setValue(user1);
+        //ref.child("appointments").child(app.getId()).setValue(app);
 
-
-//        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference();
-//        ref1.child("users").child("u3").setValue(user1);
-//        ref1.child("users").child("u1").setValue(user);
-//        ref1.child("users").child("cd8e1d67-3e31-44b0-b7b5-d12dd38997e3").setValue(user2);
-//        ref1.child("users").child("u2").setValue(user3);
-//        ref1.child("appointments").child(app.getId()).setValue(app);
         updateDoc();
     }
-
     public void updateDoc() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ValueEventListener listener = new ValueEventListener(){
