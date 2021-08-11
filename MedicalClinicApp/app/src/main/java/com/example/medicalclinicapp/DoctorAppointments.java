@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
@@ -29,16 +30,15 @@ public class DoctorAppointments extends AppCompatActivity {
     private static final String TAG = "DoctorAppointment";       //added this line for debugging
     private ArrayList<Appointment> mAppointment  = new ArrayList<>();
     private ArrayList<String> mAppointmentNames  = new ArrayList<>();   //added variables - the same one that we had in the adapter
+    private ArrayList<String> mPatientInfo = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_appointments);
-
         Log.d(TAG, "onCreate: started.");
-        User this_user = (User)getIntent().getSerializableExtra("this_user");
-        //System.out.println(this_user.getDoctorAccount().getName());
 
+        User this_user = (User)getIntent().getSerializableExtra("this_user");
         FirebaseDatabase.getInstance().getReference().child("appointments").addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -49,38 +49,31 @@ public class DoctorAppointments extends AppCompatActivity {
                     if (appt.getDoctor().getName().equals(this_user.getDoctorAccount().getName())){
                         if ((appt.getDate().compareTo(currentDate) > 0) || (appt.getDate().compareTo(currentDate) == 0)){
                             mAppointment.add(appt);
+
                         }
                     }
                 }
                 mAppointment.sort(Comparator.comparing(Appointment::getDate));
                 for(Appointment a: mAppointment){
                     mAppointmentNames.add(a.getPatient().getName() + " at "+ a.getDate());
+                    mPatientInfo.add("\nPATIENT INFORMATION \n-----------------------------------------------------\nNAME: " + a.getPatient().getName() + "\nGENDER: " + a.getPatient().getGender()  + "\nDATE OF BIRTH: " + a.getPatient().getBirthdate() + "\n\nPATIENT HISTORY\n-----------------------------------------------------\nPREVIOUS APPOINTMENTS: " + a.getPatient().getPrevious() + "\nUPCOMING APPOINTMENTS:" + a.getPatient().getUpcoming() + "\nDOCTORS SEEN:" + a.getPatient().getVisited() + "\n");
                 }
                 initRecyclerView();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
                 Log.w(TAG, "loadAppointment:onCancelled", databaseError.toException());
             }
         });
 
         configureBackButton();
-
     }
 
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: init recyclerview");
-        RecyclerView recyclerView = findViewById(R.id.upcomingAppointments);
-        //parentLayout is from recyclerview_row.xml
-        //upcomingAppointments is from activity_main.xml
+        RecyclerView recyclerView = findViewById(R.id.upcomingAppointments);         //upcomingAppointments is from activity_doctor_appointments.xml
 
-        //create RecyclerViewAdapter object + passing in the dataset and the context to the adapter
-        Log.d(TAG, "creating RecyclerViewAdapter object");
-        //took out 'this' as the last argument
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(mAppointmentNames);
-
-        Log.d(TAG, "adapter created");
+        ClickableRecyclerViewAdapter adapter = new ClickableRecyclerViewAdapter(this, mAppointmentNames, mPatientInfo);    //ADDED PARAMETER
         recyclerView.setAdapter(adapter); //passing a null variable to this line
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalClinicApp">
-        <activity android:name=".PatientInformation"></activity>
-
+        <activity android:name=".PatientProfile"></activity>
+        <activity android:name=".PatientInformation" />
         <activity
             android:name=".PatientPastAppointments"
             android:exported="true" />

@@ -16,7 +16,6 @@
         android:layout_marginBottom="8dp"
         android:background="#2B0275"
         android:clickable="true"
-        android:focusable="true"
         android:padding="8dp"
         android:paddingLeft="20dp"
         android:textColor="#FFFFFF"

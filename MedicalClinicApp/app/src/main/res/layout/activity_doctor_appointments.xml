@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:layout_marginTop="26dp"
-        android:background="#FFFFFF"
-        android:textColor="#009688"
+        android:background="#00FFFFFF"
+        android:textColor="#132068"
         android:gravity="center"
         android:text="UPCOMING APPOINTMENTS"
         android:textStyle="bold"
@@ -23,32 +23,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <!--
-    <TextView
-        android:id="@+id/viewAppointmentsInstruction"
-        android:layout_width="248dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/doctor_view_instructions"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewAppoinments" />
-        -->
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/upcomingAppointments"
         android:layout_width="354dp"
         android:layout_height="527dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAppointmentsInstruction" />-->
+
+
+    <TextView
+        android:id="@+id/viewAppointmentsInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="8dp"
+        android:text="Click on an item to view patient information"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewAppoinments" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/upcomingAppointments"
+        android:layout_width="354dp"
+        android:layout_height="525dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="@id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewAppointmentsInstruction" />
 
     <Button
         android:id="@+id/backButton"
@@ -61,7 +75,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upcomingAppointments" />
+        app:layout_constraintTop_toBottomOf="@+id/upcomingAppointments"
+        app:layout_constraintVertical_bias="0.957" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
