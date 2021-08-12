@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainPresenter = new MainPresenter(new MainModel(),this);
+        mainPresenter.update();
     }
 
     public void onRadioButtonClicked(View view) {
