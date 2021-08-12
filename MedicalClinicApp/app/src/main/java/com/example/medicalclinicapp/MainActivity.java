@@ -33,89 +33,13 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<String> weekAvailable = new ArrayList<String>();
-    ArrayList<String> dayAvailable = new ArrayList<String>();
-    SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd  HH:mm");
+    MainPresenter mainPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        adjustAvailable();
-        updateDoc();
-    }
-    public void updateDoc() {
-        //format.setTimeZone(TimeZone.getTimeZone("EDT"));
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
-        ValueEventListener listener = new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Date today = new Date();
-                for(DataSnapshot child:dataSnapshot.getChildren()) {
-                    User user = child.getValue(User.class);
-                    if (user.getType().equals("Doctor")) {
-                        String key = child.getKey();
-                        Doctor doctor = user.getDoctorAccount();
-                        Date first = null;
-                        try {
-                            first = format.parse(doctor.getWeekly_availabilities().get(0));
-                            if (first.getDay() < today.getDay()) {//old date in database;
-                                doctor.addWeeklyAvailables(dayAvailable);
-                                for (int i = 0; i < doctor.getWeekly_availabilities().size(); i++) {
-                                    Date temp = format.parse(doctor.getWeekly_availabilities().get(i));
-                                    doctor.removeWeeklyAvailable(i);
-                                    if(temp.getDay() != first.getDay()){
-                                        break;
-                                    }
-                                }
-                            } else if(first.getDay() == today.getDay() && first.before(today)) {
-                                for (int i = 0; i < doctor.getWeekly_availabilities().size(); i++) {
-                                    Date temp = format.parse(doctor.getWeekly_availabilities().get(i));
-                                    doctor.removeWeeklyAvailable(i);
-                                    if(temp.getHours()>today.getHours()){
-                                        break;
-                                    }
-                                }
-                            }
-                            user.setDoctorAccount(doctor);
-                            ref.child(key).setValue(user);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-                Log.w("info", "Failed to read value.", databaseError.toException());
-            }
-        };
-        ref.addValueEventListener(listener);
-    }
-
-    public void adjustAvailable(){
-        Date today = new Date();
-        Date tomorrow = new Date(today.getYear(),today.getMonth(),(today.getDate()+1));
-        // add week available
-        for(int i = 0; i < 7; i++){
-            if(today.getHours()<21){
-                for (int j = 0; j<9; j++){
-                    weekAvailable.add(format.format(new Date(today.getYear(),today.getMonth(),(today.getDate()+i),9+j,0,0)));
-                }
-            }
-            else{
-                for (int j = 0; j<9; j++){
-                    weekAvailable.add(format.format(new Date(tomorrow.getYear(),tomorrow.getMonth(),(tomorrow.getDate()+i),9+j,0,0)));
-                }
-            }
-        }
-        // add day available
-        for (int j = 0; j<9; j++){
-            dayAvailable.add(format.format(new Date(today.getYear(),today.getMonth(),(today.getDate()+7),9+j,0,0)));
-        }
+        mainPresenter = new MainPresenter(new MainModel(),this);
     }
 
     public void onRadioButtonClicked(View view) {
@@ -133,56 +57,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public String getUsername(){
+        String username = ((EditText)findViewById(R.id.username)).getText().toString();
+        return username;
+    }
+
+    public String getType(){
+        String type = ((TextView)findViewById(R.id.text_type)).getText().toString();
+        return type;
+    }
+
+    public String getPassword(){
+        String password = ((EditText)findViewById(R.id.password)).getText().toString();
+        return password;
+    }
+
+    public void loginSuccess(User user, String key){
+        //mainPresenter.update();
+        if(getType().equals("Doctor")) {
+            Intent i = new Intent(MainActivity.this, DoctorActivity.class);
+            i.putExtra("this_user", user);
+            startActivity(i);
+        }
+        else{
+            Intent i = new Intent(MainActivity.this,PatientActivity.class);
+            i.putExtra("this_user", user);
+            i.putExtra("pKey",key);
+            startActivity(i);
+        }
+    }
+
+    public void loginFail(){
+        finish();
+        startActivity(getIntent());
+    }
+
     public void login(View view){
         Button login = findViewById(R.id.login);
         login.setBackground(getResources().getDrawable(R.drawable.clicked_roundbutton));
-        // Read from the database
-        String username = ((EditText)findViewById(R.id.username)).getText().toString();
-        String password = ((EditText)findViewById(R.id.password)).getText().toString();
-        String type = ((TextView)findViewById(R.id.text_type)).getText().toString();
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
-        ValueEventListener listener = new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot child:dataSnapshot.getChildren()){
-                    User user = child.getValue(User.class);
-                    if(user.getUsername().toString().equals(username) && user.getPassword().toString().equals(password)
-                            && user.getType().equals(type)){
-                        //login succeed
-                        if(user.getType().equals("Doctor")) {
-                            Intent i = new Intent(MainActivity.this, DoctorActivity.class);
-                            i.putExtra("this_user", user);
-                            startActivity(i);
-                        }
-                        else{
-                            String pKey = child.getKey();
-                            Intent i = new Intent(MainActivity.this,PatientActivity.class);
-                            i.putExtra("this_user", user);
-                            i.putExtra("pKey",pKey);
-                            startActivity(i);
-                        }
-                    }
-                }
-                //login fail
-                finish();
-                startActivity(getIntent());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-                Log.w("info", "Failed to read value.", databaseError.toException());
-            }
-        };
-        ref.addValueEventListener(listener);
+        mainPresenter.Login();
     }
 
     public void register(View view) {
         Button register = findViewById(R.id.register);
         register.setTextColor(getResources().getColor(R.color.light_blue));
         Intent i = new Intent(MainActivity.this,RegisterActivity.class);
-        i.putExtra("weekAvailable",weekAvailable);
+        i.putExtra("weekAvailable",mainPresenter.adjustAvailable(7));
         startActivity(i);
     }
 }

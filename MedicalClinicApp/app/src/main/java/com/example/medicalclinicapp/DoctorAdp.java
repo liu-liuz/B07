@@ -76,6 +76,12 @@ public class DoctorAdp extends ArrayAdapter<Doctor> implements Filterable {
                         Boolean contain = true;
                         String docString = doc.getName() + doc.getGender() + doc.getSpecialization();
                         for(int j = 0; j<splited.length; j++){
+                            if (splited[j] == "male"){
+                                if(docString.toLowerCase().contains("female")){
+                                    contain = false;
+                                    break;
+                                }
+                            }
                             if (!docString.toLowerCase().contains(splited[j])){
                                 contain = false;
                                 break;
