@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     public void login(View view){
         Button login = findViewById(R.id.login);
         login.setBackground(getResources().getDrawable(R.drawable.clicked_roundbutton));
-        mainPresenter.Login();
+        mainPresenter.checkLogin();
     }
 
     public void register(View view) {

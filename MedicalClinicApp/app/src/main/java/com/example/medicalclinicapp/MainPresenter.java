@@ -36,14 +36,16 @@ public class MainPresenter {
         return weekAvailable;
     }
 
-    public void Login(){
+    public void checkLogin(){
         String username = mainActivity.getUsername();
         String type = mainActivity.getType();
         String password = mainActivity.getPassword();
-        MainModel.checkLogin(username, password, type);
-        Log.i("user",MainModel.key);
-        if(MainModel.user != null){
-            mainActivity.loginSuccess(MainModel.user, MainModel.key);
+        mainModel.checkLogin(username,password,type,this.mainModel,this.mainActivity);
+    }
+
+    public void login(User u, String k){
+        if(u != null){
+            mainActivity.loginSuccess(u, k);
         }
         else{
             mainActivity.loginFail();

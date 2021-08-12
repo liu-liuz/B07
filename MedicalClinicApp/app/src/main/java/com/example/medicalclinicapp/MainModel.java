@@ -15,10 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainModel {
-    public static String key;
-    public static User user;
-    MainPresenter mainPresenter;
-
+    private static MainPresenter mainPresenter;
     public MainModel(){}
 //        input in firebase for testing
 //        Doctor d1 = new Doctor("Sarah","Female","Psychiatry");
@@ -92,35 +89,27 @@ public class MainModel {
         ref.addValueEventListener(listener);
     }
 
-    public static void checkLogin(String username, String password, String type) {
-        readData(username,password,type, new MyCallback() {
-            @Override
-            public void onCallback(User value) {
-                user = value;
-            }
-            @Override
-            public void onCallback(String value) {
-                key = value;
-            }
-        });
-    }
-
-    public static void readData(String username, String password, String type, MyCallback myCallback) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void checkLogin(String username, String password, String type, MainModel m, MainActivity a) {
+        mainPresenter = new MainPresenter(m,a);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot child:dataSnapshot.getChildren()) {
-                    User user = child.getValue(User.class);
-                    if (user.getUsername().toString().equals(username) && user.getPassword().toString().equals(password) && user.getType().toString().equals(type)) {
-                        myCallback.onCallback(user);
-                        myCallback.onCallback(child.getKey());
+                    User u = child.getValue(User.class);
+                    if (u.getUsername().toString().equals(username) && u.getPassword().toString().equals(password) && u.getType().toString().equals(type)) {
+                        mainPresenter.login(u,child.getKey());
+                        break;
                     }
                 }
+                mainPresenter.login(null,null);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        };
+        ref.addValueEventListener(listener);
     }
 }
