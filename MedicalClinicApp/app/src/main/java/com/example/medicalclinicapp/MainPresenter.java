@@ -9,6 +9,7 @@ import java.util.Date;
 public class MainPresenter {
     MainModel mainModel;
     MainActivity mainActivity;
+    String key;
 
     public MainPresenter(MainModel model, MainActivity view){
         this.mainModel = model;
@@ -45,6 +46,7 @@ public class MainPresenter {
 
     public void login(User u, String k){
         if(u != null){
+            key = k;
             mainActivity.loginSuccess(u, k);
         }
         else{
@@ -55,4 +57,5 @@ public class MainPresenter {
     public void update(){
         mainModel.updateDoc();
     }
+
 }
