@@ -50,6 +50,8 @@ public class MainModel {
                     if (user.getType().equals("Doctor")) {
                         String key = child.getKey();
                         Doctor doctor = user.getDoctorAccount();
+                        //uncomment this when first time running and leave it commented after that.
+                        //doctor.getWeekly_availabilities().clear();
                         Date first = null;
                         try {
                             if(doctor.getWeekly_availabilities().isEmpty()){
@@ -57,7 +59,6 @@ public class MainModel {
                             }
                             first = format.parse(doctor.getWeekly_availabilities().get(0));
                             if (first.getDate() < today.getDate()) {//old date in database;
-                                doctor.addWeeklyAvailables(mainPresenter.adjustAvailable(today.getDate()-first.getDate()));
                                 for (int i = 0; i < doctor.getWeekly_availabilities().size(); i++) {
                                     Date temp = format.parse(doctor.getWeekly_availabilities().get(i));
                                     if(temp.getDate() < today.getDate()){
