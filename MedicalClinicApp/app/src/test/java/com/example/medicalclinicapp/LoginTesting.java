@@ -53,7 +53,7 @@ public class LoginTesting{
     @Test
     public void successfulUpdate(){
         MainPresenter presenter = new MainPresenter(model, view);
-        verify(presenter).mainModel.updateDoc();
+        verify(presenter).mainModel.updateDoc(model, view);
     }
 
     //successful login - doctor

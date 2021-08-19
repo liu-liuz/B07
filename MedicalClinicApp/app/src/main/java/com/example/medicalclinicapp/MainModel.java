@@ -36,7 +36,8 @@ public class MainModel {
 //        ref.child("users").child("u3").setValue(u3);
 //        ref.child("users").child("cd8e1d67-3e31-44b0-b7b5-d12dd38997e3").setValue(u4);
 
-    public void updateDoc() {
+    public void updateDoc(MainModel m, MainActivity a) {
+        mainPresenter = new MainPresenter(m,a);
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd  HH:mm");
         //format.setTimeZone(TimeZone.getTimeZone("EDT"));
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
@@ -51,6 +52,9 @@ public class MainModel {
                         Doctor doctor = user.getDoctorAccount();
                         Date first = null;
                         try {
+                            if(doctor.getWeekly_availabilities().isEmpty()){
+                                doctor.addWeeklyAvailables(mainPresenter.adjustAvailable(7));
+                            }
                             first = format.parse(doctor.getWeekly_availabilities().get(0));
                             if (first.getDate() < today.getDate()) {//old date in database;
                                 doctor.addWeeklyAvailables(mainPresenter.adjustAvailable(today.getDate()-first.getDate()));
@@ -61,7 +65,7 @@ public class MainModel {
                                     }
                                 }
                             }
-                            if(first.getDay() == today.getDay() && first.before(today)) {
+                            else if(first.getDay() == today.getDay() && first.before(today)) {
                                 for (int i = 0; i < doctor.getWeekly_availabilities().size(); i++) {
                                     Date temp = format.parse(doctor.getWeekly_availabilities().get(i));
                                     if(temp.getHours()>today.getHours()){

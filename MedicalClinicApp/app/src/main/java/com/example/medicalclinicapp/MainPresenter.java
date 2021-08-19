@@ -55,7 +55,7 @@ public class MainPresenter {
     }
 
     public void update(){
-        mainModel.updateDoc();
+        mainModel.updateDoc(this.mainModel,this.mainActivity);
     }
 
 }
